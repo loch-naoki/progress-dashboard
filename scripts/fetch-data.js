@@ -342,10 +342,10 @@ async function fetchLinearData() {
       totalCount: transformedMagazines.length,
       magazines: transformedMagazines,
       summary: {
-        '1.企画案ストック': transformedMagazines.filter(m => m.label === STATUS_LABELS.stock).length,
-        '2.構成作成中': transformedMagazines.filter(m => m.label === STATUS_LABELS.composition).length,
-        '3.原稿執筆中': transformedMagazines.filter(m => m.label === STATUS_LABELS.manuscript).length,
-        '4.動画編集中': transformedMagazines.filter(m => m.label === STATUS_LABELS.video).length
+        [STATUS_LABELS.stock]: transformedMagazines.filter(m => m.label === STATUS_LABELS.stock).length,
+        [STATUS_LABELS.composition]: transformedMagazines.filter(m => m.label === STATUS_LABELS.composition).length,
+        [STATUS_LABELS.manuscript]: transformedMagazines.filter(m => m.label === STATUS_LABELS.manuscript).length,
+        [STATUS_LABELS.video]: transformedMagazines.filter(m => m.label === STATUS_LABELS.video).length
       }
     };
 
@@ -357,11 +357,11 @@ async function fetchLinearData() {
     console.log('💾 データを data/linear-data.json に保存しました');
 
     // Display summary
-    console.log('\n📈 マガジンステータス別サマリー:');
-    console.log(`  1.企画案ストック: ${result.summary['1.企画案ストック']}件`);
-    console.log(`  2.構成作成中: ${result.summary['2.構成作成中']}件`);
-    console.log(`  3.原稿執筆中: ${result.summary['3.原稿執筆中']}件`);
-    console.log(`  4.動画編集中: ${result.summary['4.動画編集中']}件`);
+    console.log('\n📈 ステータス別サマリー:');
+    console.log(`  ${STATUS_LABELS.stock}: ${result.summary[STATUS_LABELS.stock]}件`);
+    console.log(`  ${STATUS_LABELS.composition}: ${result.summary[STATUS_LABELS.composition]}件`);
+    console.log(`  ${STATUS_LABELS.manuscript}: ${result.summary[STATUS_LABELS.manuscript]}件`);
+    console.log(`  ${STATUS_LABELS.video}: ${result.summary[STATUS_LABELS.video]}件`);
     console.log(`  合計: ${result.totalCount}件\n`);
 
     return result;
