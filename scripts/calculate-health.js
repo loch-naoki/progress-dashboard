@@ -384,7 +384,7 @@ function determineDisplayHealthStatus(magazine, today) {
   const { label, subIssues, dueDate: publishDate } = magazine;
   let displayHealthStatus = { status: '🟢', message: '', isDeadlineNotSet: false };
 
-  if (label === '3.原稿執筆中') {
+  if (label === STATUS_LABELS.manuscript) {
     const processDelays = checkProcessDelays(subIssues, 2);
     const manuscriptSubs = subIssues.filter(sub =>
       sub.labels && sub.labels.some(l =>
@@ -421,7 +421,7 @@ function determineDisplayHealthStatus(magazine, today) {
       displayHealthStatus = { status: '🟡', message: '公開日未設定', isDeadlineNotSet: true };
     }
 
-  } else if (label === '4.動画編集中') {
+  } else if (label === STATUS_LABELS.video) {
     const delayedSubs = checkNonDoneDelays(subIssues);
     if (delayedSubs.length > 0) {
       const maxDelayDays = Math.max(...delayedSubs.map(sub => sub.delayDays));
@@ -654,10 +654,10 @@ async function calculateHealth() {
     videoHealth,
     summary: {
       total: enrichedMagazines.length,
-      '1.企画案ストック': enrichedMagazines.filter(m => m.label === STATUS_LABELS.stock).length,
-      '2.構成作成中': enrichedMagazines.filter(m => m.label === STATUS_LABELS.composition).length,
-      '3.原稿執筆中': manuscriptMagazines.length,
-      '4.動画編集中': videoMagazines.length
+      [STATUS_LABELS.stock]: enrichedMagazines.filter(m => m.label === STATUS_LABELS.stock).length,
+      [STATUS_LABELS.composition]: enrichedMagazines.filter(m => m.label === STATUS_LABELS.composition).length,
+      [STATUS_LABELS.manuscript]: manuscriptMagazines.length,
+      [STATUS_LABELS.video]: videoMagazines.length
     },
     thresholds
   };
@@ -668,10 +668,10 @@ async function calculateHealth() {
   console.log('💾 健康度データを data/health-data.json に保存しました');
   console.log('\n📊 健康度サマリー:');
   console.log(`  全体: ${overallHealth.status} ${overallHealth.label}`);
-  console.log(`  企画案ストック: ${planStockHealth.status} ${planStockHealth.label} (新規${planStockHealth.weeklyNewCount}/2件, ストック${planStockHealth.stockCount}件)`);
-  console.log(`  構成作成: ${compositionHealth.status} ${compositionHealth.label} (完了${compositionHealth.completedCount}/${compositionHealth.target}本)`);
-  console.log(`  原稿執筆: ${manuscriptHealth.status} ${manuscriptHealth.label}`);
-  console.log(`  動画編集: ${videoHealth.status} ${videoHealth.label}\n`);
+  console.log(`  ${STATUS_LABELS.stock}: ${planStockHealth.status} ${planStockHealth.label} (新規${planStockHealth.weeklyNewCount}/2件, ストック${planStockHealth.stockCount}件)`);
+  console.log(`  ${STATUS_LABELS.composition}: ${compositionHealth.status} ${compositionHealth.label} (完了${compositionHealth.completedCount}/${compositionHealth.target}本)`);
+  console.log(`  ${STATUS_LABELS.manuscript}: ${manuscriptHealth.status} ${manuscriptHealth.label}`);
+  console.log(`  ${STATUS_LABELS.video}: ${videoHealth.status} ${videoHealth.label}\n`);
 
   return result;
 }

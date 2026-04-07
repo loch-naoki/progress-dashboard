@@ -102,7 +102,7 @@ function generateHealthSection(healthData) {
             <!-- カテゴリ別の健康状態 (2x2) -->
             <div class="health-grid">
                 <div class="health-card">
-                    <h3>企画案ストック</h3>
+                    <h3>${STATUS_LABELS.stock}</h3>
                     <div class="health-indicator">${planStockHealth.status}</div>
                     <div class="health-label ${getHealthLabelClass(planStockHealth.label)}">${planStockHealth.label}</div>
                     <div class="health-detail">
@@ -112,7 +112,7 @@ function generateHealthSection(healthData) {
                 </div>
 
                 <div class="health-card">
-                    <h3>構成作成</h3>
+                    <h3>${STATUS_LABELS.composition}</h3>
                     <div class="health-indicator">${compositionHealth.status}</div>
                     <div class="health-label ${getHealthLabelClass(compositionHealth.label)}">${compositionHealth.label}</div>
                     <div class="health-detail">
@@ -122,21 +122,21 @@ function generateHealthSection(healthData) {
                 </div>
 
                 <div class="health-card">
-                    <h3>原稿執筆</h3>
+                    <h3>${STATUS_LABELS.manuscript}</h3>
                     <div class="health-indicator">${manuscriptHealth.status}</div>
                     <div class="health-label ${getHealthLabelClass(manuscriptHealth.label)}">${manuscriptHealth.label}</div>
                     <div class="health-detail">
-                        原稿執筆中：${manuscriptMagazines.length}件<br>
+                        ${STATUS_LABELS.manuscript}：${manuscriptMagazines.length}件<br>
                         ${manuscriptDetailText}
                     </div>
                 </div>
 
                 <div class="health-card">
-                    <h3>動画編集</h3>
+                    <h3>${STATUS_LABELS.video}</h3>
                     <div class="health-indicator">${videoHealth.status}</div>
                     <div class="health-label ${getHealthLabelClass(videoHealth.label)}">${videoHealth.label}</div>
                     <div class="health-detail">
-                        動画編集中：${videoMagazines.length}件<br>
+                        ${STATUS_LABELS.video}：${videoMagazines.length}件<br>
                         ${videoDetailText}
                     </div>
                 </div>
@@ -460,7 +460,7 @@ function generateCalendarSection(healthData) {
 
       // Determine phase for coloring
       let phase = 'manuscript';
-      if (magazine.label === '4.動画編集中') {
+      if (magazine.label === STATUS_LABELS.video) {
         phase = 'video';
       }
 
@@ -514,11 +514,11 @@ function generateCalendarSection(healthData) {
             <div class="calendar-legend">
                 <div class="calendar-legend-item">
                     <div class="calendar-legend-box manuscript"></div>
-                    <span class="calendar-legend-label">原稿執筆中</span>
+                    <span class="calendar-legend-label">${STATUS_LABELS.manuscript}</span>
                 </div>
                 <div class="calendar-legend-item">
                     <div class="calendar-legend-box video"></div>
-                    <span class="calendar-legend-label">動画制作中</span>
+                    <span class="calendar-legend-label">${STATUS_LABELS.video}</span>
                 </div>
                 <div class="calendar-legend-item">
                     <div class="calendar-legend-box published"></div>

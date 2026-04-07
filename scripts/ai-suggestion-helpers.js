@@ -1,4 +1,5 @@
 import { convertAssigneeName } from '../config/mappings.js';
+import { STATUS_LABELS } from '../config/settings.js';
 
 function cleanTitle(title) {
   if (!title) {
@@ -34,8 +35,8 @@ export function generateFallbackSuggestions(healthData) {
   const yellowMagazines = activeMagazines.filter(mag => mag.displayHealthStatus?.status === '🟡');
   const deadlineNotSetMagazines = activeMagazines.filter(mag => mag.displayHealthStatus?.isDeadlineNotSet);
 
-  const manuscriptCount = healthData?.summary?.['3.原稿執筆中'] ?? 0;
-  const videoCount = healthData?.summary?.['4.動画編集中'] ?? 0;
+  const manuscriptCount = healthData?.summary?.[STATUS_LABELS.manuscript] ?? 0;
+  const videoCount = healthData?.summary?.[STATUS_LABELS.video] ?? 0;
   const stockCount = healthData?.planStockHealth?.stockCount ?? 0;
 
   const highSuggestion = buildHighPrioritySuggestion({

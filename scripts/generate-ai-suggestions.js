@@ -29,10 +29,10 @@ async function generateAISuggestions() {
   }
 
     console.log('📊 健康度データ読み込み完了:', {
-      企画案ストック: healthData.planStockHealth?.stockCount ?? 0,
-      構成作成中: healthData.summary['2.構成作成中'] ?? 0,
-      原稿執筆中: healthData.summary['3.原稿執筆中'] ?? 0,
-      動画編集中: healthData.summary['4.動画編集中'] ?? 0,
+      [STATUS_LABELS.stock]: healthData.planStockHealth?.stockCount ?? 0,
+      [STATUS_LABELS.composition]: healthData.summary[STATUS_LABELS.composition] ?? 0,
+      [STATUS_LABELS.manuscript]: healthData.summary[STATUS_LABELS.manuscript] ?? 0,
+      [STATUS_LABELS.video]: healthData.summary[STATUS_LABELS.video] ?? 0,
       原稿執筆健康度: healthData.manuscriptHealth?.status,
       動画編集健康度: healthData.videoHealth?.status
     });
@@ -168,7 +168,7 @@ function buildContext(healthData) {
   const planStock = healthData.planStockHealth || {};
   const composition = healthData.compositionHealth || {};
 
-  lines.push('### 企画案ストック');
+  lines.push(`### ${STATUS_LABELS.stock}`);
   lines.push(`- **ストック数**: ${planStock.stockCount ?? 0}件`);
   lines.push(`- **今週の新規追加**: ${planStock.weeklyNewCount ?? 0} / ${planStock.weeklyTarget ?? 2}件`);
   lines.push(`- **健康度**: ${planStock.status} ${planStock.label}`);
@@ -177,7 +177,7 @@ function buildContext(healthData) {
   }
   lines.push('');
 
-  lines.push('### 構成作成');
+  lines.push(`### ${STATUS_LABELS.composition}`);
   lines.push(`- **完了数**: ${composition.completedCount ?? 0} / ${composition.target ?? 3}本`);
   lines.push(`- **健康度**: ${composition.status} ${composition.label}`);
   if (composition.shortReason) {
@@ -185,8 +185,8 @@ function buildContext(healthData) {
   }
   lines.push('');
 
-  lines.push('### 原稿執筆中のマガジン');
-  const manuscriptCount = healthData.summary?.['3.原稿執筆中'] || 0;
+  lines.push(`### ${STATUS_LABELS.manuscript}`);
+  const manuscriptCount = healthData.summary?.[STATUS_LABELS.manuscript] || 0;
   lines.push(`- **件数**: ${manuscriptCount}件`);
   lines.push(`- **健康度**: ${healthData.manuscriptHealth?.status} ${healthData.manuscriptHealth?.label}`);
   if (healthData.manuscriptHealth?.details) {
@@ -205,8 +205,8 @@ function buildContext(healthData) {
   }
   lines.push('');
 
-  lines.push('### 動画編集中のマガジン');
-  const videoCount = healthData.summary?.['4.動画編集中'] || 0;
+  lines.push(`### ${STATUS_LABELS.video}`);
+  const videoCount = healthData.summary?.[STATUS_LABELS.video] || 0;
   lines.push(`- **件数**: ${videoCount}件`);
   lines.push(`- **健康度**: ${healthData.videoHealth?.status} ${healthData.videoHealth?.label}`);
   if (healthData.videoHealth?.details) {
