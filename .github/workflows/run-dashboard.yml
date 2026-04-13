@@ -2,8 +2,9 @@ name: ダッシュボード更新
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * 1-5'  # 毎朝9時（JST = UTC+9）、平日のみ
+  # schedule:
+  #   - cron: '0 0 * * 1-5'  # 毎朝9時（JST = UTC+9）、平日のみ
+  #   ※ Slack定期配信を一時停止中。再開する場合は上記2行のコメントを解除してください。
 
 jobs:
   update:
